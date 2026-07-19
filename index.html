@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selva Saravanana L - Portfolio</title>
+    <style>
+        :root {
+            --amazon-nav-bg: #131921;
+            --amazon-nav-search: #febd69;
+            --amazon-link: #007185;
+            --amazon-link-hover: #c40000;
+            --amazon-price: #b12704;
+            --amazon-text: #0f1111;
+            --amazon-secondary: #565959;
+            --amazon-border: #e7e7e7;
+            --amazon-button-bg: #ffd814;
+            --amazon-button-hover: #f7ca00;
+            --amazon-button-border: #fcd200;
+            --amazon-buy-bg: #ffa41c;
+            --amazon-buy-hover: #fa8900;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--amazon-text);
+            background-color: #fff;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--amazon-nav-bg);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .nav-logo span {
+            color: var(--amazon-nav-search);
+            font-size: 14px;
+            margin-left: 2px;
+        }
+
+        .nav-address {
+            font-size: 12px;
+            color: #ccc;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .nav-address strong {
+            color: white;
+            font-size: 14px;
+        }
+
+        .nav-search {
+            flex-grow: 1;
+            display: flex;
+            height: 40px;
+            border-radius: 4px;
+            overflow: hidden;
+            min-width: 300px;
+        }
+
+        .nav-search select {
+            background-color: #f3f3f3;
+            border: 1px solid #cdcdcd;
+            border-right: none;
+            padding: 0 10px;
+            color: var(--amazon-secondary);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .nav-search input {
+            flex-grow: 1;
+            border: none;
+            padding: 0 15px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .nav-search button {
+            background-color: var(--amazon-nav-search);
+            border: none;
+            width: 45px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-search button svg {
+            width: 20px;
+            height: 20px;
+            fill: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .nav-links div {
+            cursor: pointer;
+        }
+
+        .nav-links .cart {
+            display: flex;
+            align-items: flex-end;
+            font-size: 14px;
+        }
+        
+        .nav-links .cart svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+            margin-right: 5px;
+        }
+
+        /* Subnav */
+        .subnav {
+            background-color: #232f3e;
+            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .subnav span {
+            cursor: pointer;
+        }
+        .subnav span:hover {
+            outline: 1px solid white;
+            border-radius: 2px;
+            padding: 2px;
+            margin: -2px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+            }
+            .buy-box-container {
+                grid-column: 1 / -1;
+                position: static; /* Disable sticky on tablet/mobile */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .product-image {
+                position: relative !important;
+                top: auto !important;
+            }
+        }
+
+        /* Left Column - Image */
+        .product-image {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: sticky;
+            top: 20px;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            width: 400px; /* Set a fixed max width to ensure it doesn't get too large */
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 4px solid #fff;
+        }
+
+        /* Middle Column - Details */
+        .product-details h1 {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 32px;
+            margin: 0 0 5px 0;
+        }
+
+        .brand-link {
+            color: var(--amazon-link);
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .brand-link:hover {
+            color: var(--amazon-link-hover);
+            text-decoration: underline;
+        }
+
+        .ratings {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            border-bottom: 1px solid var(--amazon-border);
+            padding-bottom: 15px;
+        }
+
+        .stars {
+            color: #ffa41c;
+            font-size: 18px;
+        }
+
+        .rating-count {
+            color: var(--amazon-link);
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .rating-count:hover {
+            color: var(--amazon-link-hover);
+            text-decoration: underline;
+        }
+
+        .badge-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .amazon-choice {
+            background-color: #232f3e;
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .amazon-choice::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-top: 12px solid #232f3e;
+            border-bottom: 12px solid #232f3e;
+            border-right: 10px solid transparent;
+        }
+        
+        .amazon-choice span {
+            color: #f69931;
+        }
+
+        .badge-text {
+            font-size: 14px;
+            color: var(--amazon-secondary);
+        }
+
+        .price-section {
+            margin: 15px 0;
+        }
+
+        .price-text {
+            font-size: 28px;
+            color: var(--amazon-price);
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #d16b00; /* Orange color */
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .feature-bullets {
+            padding-left: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .feature-bullets li {
+            margin-bottom: 8px;
+        }
+
+        .experience-item {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--amazon-border);
+            padding-bottom: 15px;
+        }
+        
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-item h3 {
+            font-size: 16px;
+            margin: 0 0 5px 0;
+            color: #006400; /* Dark green color */
+            font-weight: bold;
+        }
+
+        .experience-meta {
+            font-size: 13px;
+            color: var(--amazon-secondary);
+            margin-bottom: 8px;
+        }
+
+        /* Right Column - Buy Box */
+        .buy-box-container {
+            position: sticky;
+            top: 20px;
+            align-self: start;
+        }
+        
+        .buy-box {
+            border: 1px solid var(--amazon-border);
+            border-radius: 8px;
+            padding: 18px;
+            background-color: #fff;
+        }
+
+        .in-stock {
+            color: #007600;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .quantity-select {
+            margin-bottom: 15px;
+            background-color: #f0f2f2;
+            border: 1px solid #d5d9d9;
+            border-radius: 8px;
+            padding: 5px 10px;
+            width: auto;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(15,17,17,.15);
+            cursor: pointer;
+        }
+        
+        .quantity-select select {
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            border-radius: 100px;
+            padding: 8px 10px;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #0f1111;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+            box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(15,17,17,.15);
+        }
+
+        .btn-add {
+            background-color: var(--amazon-button-bg);
+            border-color: var(--amazon-button-border);
+        }
+
+        .btn-add:hover {
+            background-color: var(--amazon-button-hover);
+        }
+
+        .btn-buy {
+            background-color: var(--amazon-buy-bg);
+        }
+
+        .btn-buy:hover {
+            background-color: var(--amazon-buy-hover);
+        }
+
+        .ships-from {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--amazon-secondary);
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .ships-from span:nth-child(even) {
+            color: var(--amazon-text);
+        }
+        
+        .contact-info {
+            font-size: 12px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--amazon-border);
+            color: var(--amazon-text);
+        }
+        
+        .contact-info a {
+            color: var(--amazon-link);
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+            color: var(--amazon-link-hover);
+        }
+
+        /* Projects Section */
+        .projects-section {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+            border-top: 1px solid var(--amazon-border);
+        }
+        
+        .projects-section h2 {
+            font-size: 20px;
+            color: #c60;
+            margin-bottom: 20px;
+        }
+
+        .projects-grid {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+        }
+
+        .project-card {
+            min-width: 200px;
+            width: 200px;
+            border: 1px solid var(--amazon-border);
+            border-radius: 4px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--amazon-text);
+            transition: box-shadow 0.2s;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .project-img-placeholder {
+            width: 100%;
+            height: 140px;
+            background-color: #f0f2f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: var(--amazon-secondary);
+            font-size: 40px;
+        }
+
+        .project-title {
+            color: var(--amazon-link);
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 5px;
+            flex-grow: 1;
+        }
+        
+        .project-card:hover .project-title {
+            color: var(--amazon-link-hover);
+            text-decoration: underline;
+        }
+
+        .project-badge {
+            display: inline-block;
+            background-color: #cc0c39;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 2px;
+            margin-bottom: 5px;
+            align-self: flex-start;
+        }
+        
+        .a-icon {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            amazon<span>.in</span>
+        </div>
+        
+        <div class="nav-address">
+            <span>Deliver to Candidate</span>
+            <strong>Address</strong>
+        </div>
+
+        <div class="nav-search">
+            <select>
+                <option>All</option>
+            </select>
+            <input type="text" placeholder="What does a good employee look like?">
+            <button>
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </button>
+        </div>
+
+        <div class="nav-links">
+            <div>
+                <span style="font-size:12px; font-weight:normal; display:block; color:#ccc;">Hello, Company</span>
+                Account & Lists ▾
+            </div>
+            <div>
+                <span style="font-size:12px; font-weight:normal; display:block; color:#ccc;">Returns</span>
+                & Orders
+            </div>
+            <div class="cart">
+                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                Cart
+            </div>
+        </div>
+    </nav>
+
+    <!-- Subnav -->
+    <div class="subnav">
+        <span>☰ All</span>
+        <span>Candidate's Choice</span>
+        <span>Best Sellers</span>
+        <span>Today's Deals</span>
+        <span>Customer Service</span>
+        <span>New Releases</span>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Left Image -->
+        <div class="product-image">
+            <img src="me.jpeg" alt="Selva Saravanana L">
+        </div>
+
+        <!-- Middle Details -->
+        <div class="product-details">
+            <h1>Selva Saravanana L</h1>
+            <a href="#" class="brand-link">Brand : Candidate</a>
+
+            <div class="ratings">
+                <div class="stars">★★★★★</div>
+                <div class="rating-count">423,124 ratings | 1000+ answered questions</div>
+            </div>
+
+            <div class="badge-row">
+                <div class="amazon-choice">Amazon's <span>Choice</span></div>
+                <div class="badge-text">for "hiring"</div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--amazon-border); margin: 15px 0;">
+
+            <div class="section-title">Objective</div>
+            <p style="font-size: 14px; line-height: 1.5; margin-bottom: 20px;">
+                B.Tech IT graduate (2023) specializing in Computer Networks and modern Web Development. Currently preparing for CCNA certification with a long-term focus on network security. Brings three years of hands-on business management experience, offering strong communication skills, responsibility, and a quick-learning mindset to an entry-level L1/L2 networking or IT role.
+            </p>
+
+            <div class="section-title">Work Experience</div>
+            
+            <div class="experience-item">
+                <h3>AJ ENTERPRISES (KAG Tile Showroom) - Store Manager</h3>
+                <div class="experience-meta">Kilachery-631402 | Feb 2023 - Mar 2026</div>
+                <ul class="feature-bullets">
+                    <li>Managed day-to-day showroom operations, including sales, stock management, dispatch, and customer service.</li>
+                    <li>Maintained inventory records and coordinated with suppliers to ensure timely material delivery.</li>
+                    <li>Handled billing and basic accounting documentation.</li>
+                    <li>Developed strong communication, problem-solving, and organizational skills through regular interaction with customers and vendors.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3>JJ ENTERPRISES (Plumbing, Electricals and Sanitary) - Store Manager</h3>
+                <div class="experience-meta">Kilachery-631402 | Feb 2023 - Mar 2026</div>
+                <ul class="feature-bullets">
+                    <li>Responsible for managing sales operations, stock control, dispatch, and daily accounts for a plumbing, electrical, and sanitary products showroom.</li>
+                    <li>Provided customer support and ensured smooth order processing.</li>
+                    <li>Maintained records using basic computer systems and contributed to improving operational efficiency.</li>
+                    <li>Gained valuable experience in multitasking, team collaboration, and handling day-to-day operational responsibilities.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3>Kyungshin Industrial Motherson Private Limited (KIML) - GET</h3>
+                <div class="experience-meta">Oragadam, 602105 | Mar 2026 - Current</div>
+                <ul class="feature-bullets">
+                    <li>Provided desktop and technical support for over 350+ computer systems in an automotive wiring harness manufacturing environment.</li>
+                    <li>Installed, configured, and troubleshot hardware, software, operating systems, and enterprise applications including DWR, Alcamist, and JAM.</li>
+                    <li>Supported network infrastructure by performing IP configuration, switch connectivity, patch management, server support, and system updates to ensure uninterrupted business and production operations.</li>
+                    <li>Developed and maintained internal web applications to automate business processes and improve operational efficiency across the organization.</li>
+                </ul>
+            </div>
+
+            <div class="section-title">Education</div>
+            <div class="experience-item">
+                <h3>ST Joseph College Of Engineering - INFORMATION TECHNOLOGY</h3>
+                <div class="experience-meta">Sriperumandhur | 2019 - 2023</div>
+                <ul class="feature-bullets">
+                    <li>Graduated with First Class Distinction (76%)</li>
+                </ul>
+            </div>
+            <div class="experience-item">
+                <h3>Donbosco Hr Sec School - Higher Secondary Certification</h3>
+                <div class="experience-meta">Pannur-602108 | 2018 - 2019</div>
+                <ul class="feature-bullets">
+                    <li>Actively participated in social activities like Road Safety Patrol and Completed with 61%</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Right Buy Box -->
+        <div class="buy-box-container">
+            <div class="buy-box">
+                <div class="price-text">Highly Valued</div>
+                
+                <div style="margin-top: 10px; font-size: 14px; color: var(--amazon-secondary);">
+                    Returns & Relocations Supported
+                </div>
+
+                <div class="in-stock" style="margin-top: 15px;">In Stock</div>
+
+                <div class="quantity-select">
+                    Qty: 
+                    <select>
+                        <option>1 Candidate</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-add" onclick="alert('Added to Cart! (But actually, you should call me!)')">Add to Cart (Hire)</button>
+                <button class="btn btn-buy" onclick="window.location.href='mailto:selvavelvizhi28@icloud.com'">Buy Now (Interview)</button>
+
+                <div class="ships-from">
+                    <span>Ships from</span>
+                    <span>Tamil Nadu, India</span>
+                    <span>Sold by</span>
+                    <span>Selva Saravanana L</span>
+                </div>
+
+                <div class="contact-info">
+                    <strong>Location:</strong><br>
+                    Plot No:25 ABK Housing Plots<br>
+                    Karanai, 631402<br><br>
+                    <strong>Contact:</strong><br>
+                    Phone: <a href="tel:+919962140266">+91 9962140266</a><br>
+                    Email: <a href="mailto:selvavelvizhi28@icloud.com">selvavelvizhi28@icloud.com</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Embedded Projects Section -->
+    <section class="embedded-projects" style="max-width: 1500px; margin: 40px auto; padding: 20px; border-top: 1px solid var(--amazon-border);">
+        <h2 style="font-size: 24px; color: #cc6600; margin-bottom: 30px; text-transform: uppercase;">MY PROJECT PREVIEWS</h2>
+        <p style="margin-bottom: 40px; font-size: 16px; color: darkgreen; font-weight: 500;">Web-Based Applications Developed with Vite and React</p>
+
+        <!-- Common Styles for Mockups (Matching DocPlus Source Code) -->
+        <style>
+            .mockup-container {
+                border: 1px solid hsl(215, 20%, 88%);
+                border-radius: 0.65rem;
+                overflow: hidden;
+                margin-bottom: 50px;
+                box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.15);
+                display: flex;
+                flex-direction: column;
+                background: hsl(220, 30%, 97%); /* bg-slate-50 */
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                height: 600px; /* fixed height like an iframe */
+            }
+            .mockup-body {
+                display: flex;
+                height: 100%;
+            }
+            /* Sidebar matching KIML System */
+            .mockup-sidebar {
+                width: 256px; /* w-64 */
+                background: hsl(222, 47%, 11%); /* --sidebar-background */
+                color: hsl(215, 20%, 75%); /* --sidebar-foreground */
+                display: flex;
+                flex-direction: column;
+                border-right: 1px solid hsl(222, 40%, 18%);
+            }
+            .sidebar-header {
+                padding: 20px;
+                border-bottom: 1px solid hsl(222, 40%, 18%);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .sidebar-logo-box {
+                width: 36px;
+                height: 36px;
+                border-radius: 8px;
+                background: linear-gradient(135deg, hsl(221, 83%, 45%), hsl(199, 89%, 48%));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+            }
+            .sidebar-title {
+                font-weight: bold;
+                color: white;
+                font-size: 14px;
+                line-height: 1.2;
+            }
+            .sidebar-subtitle {
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                opacity: 0.6;
+            }
+            .sidebar-nav {
+                flex: 1;
+                padding: 12px;
+                overflow-y: auto;
+            }
+            .mockup-nav-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 12px;
+                cursor: pointer;
+                border-radius: 6px;
+                margin-bottom: 4px;
+                font-size: 14px;
+                transition: all 0.2s ease;
+                color: hsl(215, 20%, 75%);
+            }
+            .mockup-nav-item:hover {
+                background: rgba(255,255,255,0.05);
+            }
+            .mockup-nav-item.active {
+                background: hsl(222, 40%, 18%);
+                color: white;
+                font-weight: 500;
+            }
+            .sidebar-footer {
+                padding: 12px;
+                border-top: 1px solid hsl(222, 40%, 18%);
+            }
+            .sidebar-user {
+                font-size: 12px;
+                padding: 0 12px 8px;
+            }
+            .sidebar-user-name {
+                font-weight: 500;
+                color: white;
+            }
+            
+            /* Main Content Area */
+            .mockup-main {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+            }
+            .mockup-topbar {
+                height: 56px; /* h-14 */
+                border-bottom: 1px solid hsl(215, 20%, 88%);
+                background: white;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 24px;
+                flex-shrink: 0;
+            }
+            .topbar-welcome {
+                font-size: 14px;
+                color: hsl(215, 16%, 42%);
+            }
+            .mockup-content {
+                flex: 1;
+                padding: 24px;
+                overflow-y: auto;
+            }
+            .mockup-tab-pane {
+                display: none;
+                animation: fadeIn 0.3s ease-out;
+            }
+            .mockup-tab-pane.active {
+                display: block;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(5px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .mockup-card {
+                background: white;
+                border-radius: 0.65rem;
+                border: 1px solid hsl(215, 20%, 88%);
+                box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+                padding: 24px;
+                margin-bottom: 24px;
+            }
+            .mockup-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 14px;
+            }
+            .mockup-table th {
+                color: hsl(215, 16%, 42%);
+                font-weight: 500;
+                padding: 12px 16px;
+                text-align: left;
+                border-bottom: 1px solid hsl(215, 20%, 88%);
+            }
+            .mockup-table td {
+                padding: 16px;
+                border-bottom: 1px solid hsl(215, 20%, 88%);
+                color: hsl(222, 47%, 11%);
+            }
+            .mockup-badge {
+                padding: 2px 10px;
+                border-radius: 9999px;
+                font-size: 12px;
+                font-weight: 500;
+                display: inline-block;
+            }
+            .badge-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+            .badge-warning { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+            .badge-primary { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+            
+            /* Responsive Design for Mobile Screens */
+            @media (max-width: 768px) {
+                .mockup-container {
+                    height: 800px;
+                }
+                .mockup-body {
+                    flex-direction: column;
+                }
+                .mockup-sidebar {
+                    width: 100%;
+                    flex-direction: row;
+                    align-items: center;
+                    border-right: none;
+                    border-bottom: 1px solid hsl(222, 40%, 18%);
+                    height: auto;
+                    flex-shrink: 0;
+                }
+                .sidebar-header {
+                    border-bottom: none;
+                    border-right: 1px solid hsl(222, 40%, 18%);
+                    padding: 10px 16px;
+                }
+                .sidebar-title {
+                    display: none; /* Hide title on small screens to save space */
+                }
+                .sidebar-subtitle {
+                    display: none;
+                }
+                .sidebar-nav {
+                    display: flex;
+                    flex-direction: row;
+                    overflow-x: auto;
+                    padding: 8px 16px;
+                    white-space: nowrap;
+                    align-items: center;
+                    /* Hide scrollbar for a cleaner look */
+                    scrollbar-width: none; 
+                    -ms-overflow-style: none;
+                }
+                .sidebar-nav::-webkit-scrollbar {
+                    display: none;
+                }
+                .mockup-nav-item {
+                    margin-bottom: 0;
+                    margin-right: 12px;
+                    flex-shrink: 0;
+                }
+                .sidebar-footer {
+                    display: none; /* Hide user info on mobile nav */
+                }
+                
+                /* Make data grids single column */
+                .mockup-content [style*="display: grid"] {
+                    grid-template-columns: 1fr !important;
+                }
+                
+                /* Allow tables to scroll horizontally on small screens */
+                .mockup-card {
+                    padding: 16px;
+                }
+                .mockup-table, table {
+                    display: block;
+                    overflow-x: auto;
+                    white-space: nowrap;
+                }
+                
+                /* Fix header wrappers */
+                .mockup-tab-pane > div[style*="justify-content: space-between"] {
+                    flex-direction: column;
+                    align-items: flex-start !important;
+                    gap: 12px;
+                }
+                .mockup-topbar {
+                    padding: 0 16px;
+                }
+            }
+        </style>
+
+        <!-- 1. DocPlus (EXACT RECREATION) -->
+        <h3 style="font-size: 20px; color: #0f172a; margin: 50px 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; font-family: 'Inter', sans-serif; font-weight: 600;">Document Management System (DocPlus)</h3>
+        <div class="mockup-container" id="docplus">
+            <div class="mockup-body">
+                <div class="mockup-sidebar">
+                    <div class="sidebar-header">
+                        <div class="sidebar-logo-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.5 0 4.5 1 6.5 2a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                        </div>
+                        <div>
+                            <div class="sidebar-title">KIML System</div>
+                            <div class="sidebar-subtitle">DOC_PLUS</div>
+                        </div>
+                    </div>
+                    <div class="sidebar-nav">
+                        <div class="mockup-nav-item active" onclick="switchTab('docplus', 'dash')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                            Dashboard
+                        </div>
+                        <div class="mockup-nav-item" onclick="switchTab('docplus', 'docs')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                            Documents
+                        </div>
+                        <div class="mockup-nav-item" onclick="switchTab('docplus', 'upload')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3-3 3 3"/></svg>
+                            Upload Document
+                        </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <div class="sidebar-user">
+                            <div class="sidebar-user-name">Mock Admin</div>
+                            <div style="opacity: 0.6;">ADMIN · ALL · ALL</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mockup-main">
+                    <div class="mockup-topbar">
+                        <div class="topbar-welcome">Welcome back, <span style="font-weight: 500; color: hsl(222, 47%, 11%);">Mock Admin</span></div>
+                        <div style="cursor: pointer; padding: 8px; border-radius: 6px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: hsl(215, 16%, 42%);"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        </div>
+                    </div>
+                    <div class="mockup-content">
+                        <!-- Dashboard Tab -->
+                        <div id="docplus-dash" class="mockup-tab-pane active">
+                            <h1 style="font-size: 30px; font-weight: bold; margin-top: 0; margin-bottom: 4px;">Dashboard</h1>
+                            <p style="color: #64748b; margin-bottom: 24px; margin-top: 0;">Real-time compliance across all operational units</p>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;">
+                                <div class="mockup-card" style="display: flex; align-items: center; gap: 16px; padding: 20px;">
+                                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(34,197,94,0.1); color: #22c55e; display: flex; align-items: center; justify-content: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    </div>
+                                    <div><div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Overall Compliance</div><div style="font-size: 24px; font-weight: bold;">91%</div></div>
+                                </div>
+                                <div class="mockup-card" style="display: flex; align-items: center; gap: 16px; padding: 20px;">
+                                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(239,68,68,0.1); color: #ef4444; display: flex; align-items: center; justify-content: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+                                    </div>
+                                    <div><div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Expired</div><div style="font-size: 24px; font-weight: bold;">3</div></div>
+                                </div>
+                                <div class="mockup-card" style="display: flex; align-items: center; gap: 16px; padding: 20px;">
+                                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(245,158,11,0.1); color: #f59e0b; display: flex; align-items: center; justify-content: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    </div>
+                                    <div><div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Alert Reached</div><div style="font-size: 24px; font-weight: bold;">8</div></div>
+                                </div>
+                                <div class="mockup-card" style="display: flex; align-items: center; gap: 16px; padding: 20px;">
+                                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(34,197,94,0.1); color: #22c55e; display: flex; align-items: center; justify-content: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                                    </div>
+                                    <div><div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Safe</div><div style="font-size: 24px; font-weight: bold;">121</div></div>
+                                </div>
+                            </div>
+                            <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 12px; margin-top: 0;">Units</h2>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+                                <div class="mockup-card" style="padding: 20px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                                        <div>
+                                            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Unit</div>
+                                            <div style="font-size: 20px; font-weight: bold;">PADAPPAI</div>
+                                        </div>
+                                        <div style="width: 64px; height: 64px; border-radius: 50%; border: 4px solid #22c55e; color: #22c55e; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px;">92%</div>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></div><span style="color: #64748b;">Expired</span></div><span style="font-weight: 600;">1</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></div><span style="color: #64748b;">Due Soon</span></div><span style="font-weight: 600;">2</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div><span style="color: #64748b;">Safe</span></div><span style="font-weight: 600;">34</span></div>
+                                    </div>
+                                </div>
+                                <div class="mockup-card" style="padding: 20px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                                        <div>
+                                            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Unit</div>
+                                            <div style="font-size: 20px; font-weight: bold;">ORAGADAM</div>
+                                        </div>
+                                        <div style="width: 64px; height: 64px; border-radius: 50%; border: 4px solid #f59e0b; color: #f59e0b; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px;">81%</div>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></div><span style="color: #64748b;">Expired</span></div><span style="font-weight: 600;">2</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></div><span style="color: #64748b;">Due Soon</span></div><span style="font-weight: 600;">4</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div><span style="color: #64748b;">Safe</span></div><span style="font-weight: 600;">26</span></div>
+                                    </div>
+                                </div>
+                                <div class="mockup-card" style="padding: 20px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                                        <div>
+                                            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Unit</div>
+                                            <div style="font-size: 14px; font-weight: bold; overflow-wrap: break-word;">VARADHARAJAPURAM</div>
+                                        </div>
+                                        <div style="width: 64px; height: 64px; border-radius: 50%; border: 4px solid #22c55e; color: #22c55e; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px;">100%</div>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></div><span style="color: #64748b;">Expired</span></div><span style="font-weight: 600;">0</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></div><span style="color: #64748b;">Due Soon</span></div><span style="font-weight: 600;">0</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div><span style="color: #64748b;">Safe</span></div><span style="font-weight: 600;">19</span></div>
+                                    </div>
+                                </div>
+                                <div class="mockup-card" style="padding: 20px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                                        <div>
+                                            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Unit</div>
+                                            <div style="font-size: 20px; font-weight: bold;">BEERABALLI</div>
+                                        </div>
+                                        <div style="width: 64px; height: 64px; border-radius: 50%; border: 4px solid #22c55e; color: #22c55e; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px;">94%</div>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></div><span style="color: #64748b;">Expired</span></div><span style="font-weight: 600;">0</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></div><span style="color: #64748b;">Due Soon</span></div><span style="font-weight: 600;">2</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div><span style="color: #64748b;">Safe</span></div><span style="font-weight: 600;">31</span></div>
+                                    </div>
+                                </div>
+                                <div class="mockup-card" style="padding: 20px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                                        <div>
+                                            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Unit</div>
+                                            <div style="font-size: 20px; font-weight: bold;">PUNE</div>
+                                        </div>
+                                        <div style="width: 64px; height: 64px; border-radius: 50%; border: 4px solid #ef4444; color: #ef4444; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px;">68%</div>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></div><span style="color: #64748b;">Expired</span></div><span style="font-weight: 600;">4</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></div><span style="color: #64748b;">Due Soon</span></div><span style="font-weight: 600;">3</span></div>
+                                        <div style="display: flex; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div><span style="color: #64748b;">Safe</span></div><span style="font-weight: 600;">11</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Documents Tab -->
+                        <div id="docplus-docs" class="mockup-tab-pane">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+                                <h2 style="font-size: 24px; font-weight: bold; margin: 0;">Documents</h2>
+                                <button style="background: hsl(221, 83%, 53%); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500;">Upload Document</button>
+                            </div>
+                            <div class="mockup-card" style="padding: 0; overflow: hidden;">
+                                <table style="width: 100%; text-align: left; border-collapse: collapse; font-size: 14px;">
+                                    <thead>
+                                        <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b;">
+                                            <th style="padding: 16px;">Document Name</th>
+                                            <th style="padding: 16px;">Unit</th>
+                                            <th style="padding: 16px;">Status</th>
+                                            <th style="padding: 16px;">Expiry Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                                            <td style="padding: 16px;"><div style="font-weight: 500; color: #0f172a;">Fire Safety Certificate</div><div style="font-size: 12px; color: #64748b;">LIC-2026-881</div></td>
+                                            <td style="padding: 16px;">PADAPPAI</td>
+                                            <td style="padding: 16px;"><span style="background: rgba(34,197,94,0.1); color: #22c55e; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">APPROVED</span></td>
+                                            <td style="padding: 16px;">2028-12-31</td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                                            <td style="padding: 16px;"><div style="font-weight: 500; color: #0f172a;">Trade License</div><div style="font-size: 12px; color: #64748b;">TRD-9001</div></td>
+                                            <td style="padding: 16px;">PUNE</td>
+                                            <td style="padding: 16px;"><span style="background: rgba(239,68,68,0.1); color: #ef4444; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">EXPIRED</span></td>
+                                            <td style="padding: 16px; color: #ef4444; font-weight: 500;">2026-05-15</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 16px;"><div style="font-weight: 500; color: #0f172a;">Health Inspector Clearance</div><div style="font-size: 12px; color: #64748b;">HLT-B22</div></td>
+                                            <td style="padding: 16px;">ORAGADAM</td>
+                                            <td style="padding: 16px;"><span style="background: rgba(245,158,11,0.1); color: #f59e0b; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">PENDING L1</span></td>
+                                            <td style="padding: 16px;">2027-01-10</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Upload Tab -->
+                        <div id="docplus-upload" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0;">Upload Document</h2>
+                            <div class="mockup-card">
+                                <div style="border: 2px dashed hsl(215, 20%, 88%); padding: 60px; text-align: center; border-radius: 8px; background: hsl(220, 30%, 97%);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: hsl(215, 16%, 42%); margin: 0 auto 16px;"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3-3 3 3"/></svg>
+                                    <div style="font-weight: 500; color: hsl(222, 47%, 11%);">Click to select files or drag and drop</div>
+                                    <div style="font-size: 12px; color: hsl(215, 16%, 42%); margin-top: 8px;">PDF, DOCX, XLSX up to 50MB</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. AssetPlus -->
+        <h3 style="font-size: 20px; color: #0f172a; margin: 50px 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; font-family: 'Inter', sans-serif; font-weight: 600;">Asset Management System (AssetPlus)</h3>
+        <div class="mockup-container" id="assetplus">
+            <div class="mockup-body">
+                <div class="mockup-sidebar" style="background: #1e293b; border-right: none;">
+                    <div class="sidebar-header" style="border-bottom: 1px solid #334155; padding: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; color: white;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #60a5fa;"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                            <div style="font-weight: bold; font-size: 16px;">AssetPlus</div>
+                        </div>
+                    </div>
+                    <div class="sidebar-nav" style="padding: 16px 8px;">
+                        <div class="mockup-nav-item" onclick="switchTab('assetplus', 'dashboard')" style="background: #3b82f6; color: white; padding: 12px; font-weight: 500;">Dashboard</div>
+                        <div class="mockup-nav-item" onclick="switchTab('assetplus', 'inventory')" style="color: #cbd5e1; padding: 12px;">Inventory</div>
+                        <div class="mockup-nav-item" onclick="switchTab('assetplus', 'units')" style="color: #cbd5e1; padding: 12px;">Unit Management</div>
+                        <div class="mockup-nav-item" onclick="switchTab('assetplus', 'users')" style="color: #cbd5e1; padding: 12px;">User Management</div>
+                        <div class="mockup-nav-item" onclick="switchTab('assetplus', 'approvals')" style="color: #cbd5e1; padding: 12px; display: flex; justify-content: space-between;">Pending Approvals <span style="background: #ef4444; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">2</span></div>
+                        <div class="mockup-nav-item" onclick="switchTab('assetplus', 'transfer')" style="color: #cbd5e1; padding: 12px;">Transfer History</div>
+                        <div class="mockup-nav-item" onclick="switchTab('assetplus', 'reports')" style="color: #cbd5e1; padding: 12px;">Reports</div>
+                    </div>
+                    <div style="padding: 16px;">
+                        <button style="width: 100%; padding: 10px; background: #ef4444; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">Logout</button>
+                    </div>
+                </div>
+                <div class="mockup-main" style="background: #f8fafc;">
+                    <div class="mockup-topbar" style="background: white; border-bottom: 1px solid #e2e8f0; height: 60px;">
+                        <div class="topbar-welcome" style="font-weight: 500; font-size: 16px; color: #0f172a;">Inventory Management</div>
+                    </div>
+                    <div class="mockup-content">
+                        <div id="assetplus-dashboard" class="mockup-tab-pane active">
+                            <div style="margin-bottom: 24px;">
+                                <h1 style="font-size: 32px; font-weight: bold; margin-top: 0; margin-bottom: 4px;">Dashboard</h1>
+                                <p style="color: #64748b; margin-bottom: 24px; margin-top: 0;">Monitor and manage your asset inventory across all units.</p>
+                            </div>
+                            <div style="display: flex; gap: 8px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px;">
+                                <button style="padding: 8px 16px; border: none; background: none; font-size: 16px; font-weight: 600; cursor: pointer; color: #3b82f6; border-bottom: 3px solid #3b82f6; margin-bottom: -2px;">Overview</button>
+                                <button style="padding: 8px 16px; border: none; background: none; font-size: 16px; font-weight: 600; cursor: pointer; color: #64748b; border-bottom: 3px solid transparent; margin-bottom: -2px;">Age Calculator</button>
+                            </div>
+                            <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                                <div style="background: white; border: 2px solid #3b82f6; color: #3b82f6; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 14px;">All Units <span style="background: #3b82f6; color: white; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin-left: 4px;">4</span></div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+                                <div class="mockup-card" style="padding: 24px;">
+                                    <div style="margin-bottom: 12px;"><div style="width: 40px; height: 40px; background: #eff6ff; color: #3b82f6; border-radius: 8px; display: flex; align-items: center; justify-content: center;"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg></div></div>
+                                    <div style="font-size: 20px; font-weight: 700; color: #1e293b;">Laptop</div>
+                                    <div style="font-size: 32px; font-weight: 800; color: #3b82f6; margin-top: 8px;">24</div>
+                                </div>
+                                <div class="mockup-card" style="padding: 24px;">
+                                    <div style="margin-bottom: 12px;"><div style="width: 40px; height: 40px; background: #f3e8ff; color: #9333ea; border-radius: 8px; display: flex; align-items: center; justify-content: center;"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg></div></div>
+                                    <div style="font-size: 20px; font-weight: 700; color: #1e293b;">Monitor</div>
+                                    <div style="font-size: 32px; font-weight: 800; color: #3b82f6; margin-top: 8px;">18</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="assetplus-inventory" class="mockup-tab-pane">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+                                <h2 style="font-size: 24px; font-weight: bold; margin: 0;">Hardware Inventory</h2>
+                                <button style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">+ Add Asset</button>
+                            </div>
+                            <div class="mockup-card" style="padding:0;">
+                                <table class="mockup-table">
+                                    <tr style="background: #f1f5f9;"><th>Asset Tag</th><th>Category</th><th>Model</th><th>Status</th></tr>
+                                    <tr><td>AST-L-102</td><td>Laptop</td><td>Dell Latitude 7420</td><td><span class="mockup-badge badge-primary">Assigned</span></td></tr>
+                                    <tr><td>AST-M-045</td><td>Monitor</td><td>Dell 24" P2419H</td><td><span class="mockup-badge badge-success">In Stock</span></td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="assetplus-units" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0;">Unit Management</h2>
+                            <div class="mockup-card">Manage business units and branches.</div>
+                        </div>
+                        <div id="assetplus-users" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0;">User Management</h2>
+                            <div class="mockup-card">Manage system users and roles.</div>
+                        </div>
+                        <div id="assetplus-approvals" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0;">Pending Approvals</h2>
+                            <div class="mockup-card">Approve or reject asset transfer requests.</div>
+                        </div>
+                        <div id="assetplus-transfer" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0;">Transfer History</h2>
+                            <div class="mockup-card">Audit log of all asset movements.</div>
+                        </div>
+                        <div id="assetplus-reports" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0;">Reports</h2>
+                            <div class="mockup-card">Generate excel reports for auditing.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. EPSR -->
+        <h3 style="font-size: 20px; color: #0f172a; margin: 50px 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; font-family: 'Inter', sans-serif; font-weight: 600;">EPSR Appraisal Portal</h3>
+        <div class="mockup-container" id="epsr">
+            <div class="mockup-body">
+                <div class="mockup-sidebar" style="background: white; border-right: 1px solid #e2e8f0; color: #334155;">
+                    <div class="sidebar-header" style="border-bottom: 1px solid #e2e8f0; padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="background: #0f172a; padding: 8px; border-radius: 6px; color: white;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                            </div>
+                            <div>
+                                <div style="font-weight: 800; font-size: 16px; color: #0f172a; letter-spacing: -0.5px;">EPSR PORTAL</div>
+                                <div style="font-size: 11px; color: #64748b; text-transform: uppercase; font-weight: 600;">Admin Access</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-nav" style="padding: 16px;">
+                        <div class="mockup-nav-item" onclick="switchTab('epsr', 'dashboard')" style="background: #f1f5f9; color: #0f172a; font-weight: 600;">Dashboard</div>
+                        <div class="mockup-nav-item" onclick="switchTab('epsr', 'units')" style="color: #475569;">Unit Management</div>
+                        <div class="mockup-nav-item" onclick="switchTab('epsr', 'depts')" style="color: #475569;">Department Management</div>
+                        <div class="mockup-nav-item" onclick="switchTab('epsr', 'desig')" style="color: #475569;">Designation Management</div>
+                        <div class="mockup-nav-item" onclick="switchTab('epsr', 'users')" style="color: #475569;">User Management</div>
+                        <div class="mockup-nav-item" onclick="switchTab('epsr', 'reports')" style="color: #475569;">Reports</div>
+                    </div>
+                </div>
+                <div class="mockup-main" style="background: #f8fafc;">
+                    <div class="mockup-topbar" style="background: white; border-bottom: 1px solid #e2e8f0;">
+                        <div class="topbar-welcome" style="font-weight: 500;">Admin Dashboard</div>
+                    </div>
+                    <div class="mockup-content">
+                        <div id="epsr-dashboard" class="mockup-tab-pane active">
+                            <div style="margin-bottom: 24px;">
+                                <div style="font-size: 30px; font-weight: bold; color: #0f172a;">Overview</div>
+                                <div style="color: #64748b;">Welcome back! Here's what's happening with EPSR.</div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div class="mockup-card" style="display: flex; gap: 16px; align-items: center;">
+                                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(59,130,246,0.1); color: #3b82f6; display: flex; align-items: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                                    <div><div style="font-size: 24px; font-weight: bold; color: #0f172a;">142</div><div style="font-size: 13px; color: #64748b; font-weight: 500;">Total Employees</div></div>
+                                </div>
+                                <div class="mockup-card" style="display: flex; gap: 16px; align-items: center;">
+                                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(99,102,241,0.1); color: #6366f1; display: flex; align-items: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg></div>
+                                    <div><div style="font-size: 24px; font-weight: bold; color: #0f172a;">12</div><div style="font-size: 13px; color: #64748b; font-weight: 500;">Total Users</div></div>
+                                </div>
+                                <div class="mockup-card" style="display: flex; gap: 16px; align-items: center;">
+                                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(139,92,246,0.1); color: #8b5cf6; display: flex; align-items: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg></div>
+                                    <div><div style="font-size: 24px; font-weight: bold; color: #0f172a;">0</div><div style="font-size: 13px; color: #64748b; font-weight: 500;">EPSR Forms</div></div>
+                                </div>
+                                <div class="mockup-card" style="display: flex; gap: 16px; align-items: center;">
+                                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(16,185,129,0.1); color: #10b981; display: flex; align-items: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg></div>
+                                    <div><div style="font-size: 24px; font-weight: bold; color: #0f172a;">4</div><div style="font-size: 13px; color: #64748b; font-weight: 500;">Business Units</div></div>
+                                </div>
+                            </div>
+                            <div class="mockup-card" style="display: flex; align-items: center; gap: 20px; padding: 32px;">
+                                <div style="flex: 1;">
+                                    <div style="font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">EPSR Portal — Admin Control Center</div>
+                                    <div style="color: #475569; font-size: 14px; line-height: 1.6;">Manage business units, users, and employee records. Use the navigation on the left to access different sections. The EPSR system supports multi-role workflows including Employee self-reviews, Department Head appraisals, HR Head approvals, and Leader final sign-off.</div>
+                                </div>
+                                <div style="width: 80px; height: 80px; background: rgba(59,130,246,0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 36px; flex-shrink: 0;">📊</div>
+                            </div>
+                        </div>
+                        <div id="epsr-units" class="mockup-tab-pane">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <h2 style="font-size: 24px; font-weight: bold; margin: 0; color: #0f172a;">Business Units</h2>
+                                <button style="background: #0f172a; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500;">Create Unit</button>
+                            </div>
+                            <div class="mockup-card" style="padding: 0; overflow: hidden; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1);">
+                                <table style="width: 100%; text-align: left; border-collapse: collapse; font-size: 14px;">
+                                    <thead>
+                                        <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #475569;">
+                                            <th style="padding: 16px; font-weight: 600;">Unit Code</th>
+                                            <th style="padding: 16px; font-weight: 600;">Unit Name</th>
+                                            <th style="padding: 16px; font-weight: 600;">Head Count</th>
+                                            <th style="padding: 16px; font-weight: 600; text-align: right;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                                            <td style="padding: 16px; font-weight: 600; color: #0f172a;">U-001</td>
+                                            <td style="padding: 16px; color: #334155;">Corporate Headquarters</td>
+                                            <td style="padding: 16px; color: #64748b;">45 Employees</td>
+                                            <td style="padding: 16px; text-align: right; color: #3b82f6; cursor: pointer; font-weight: 500;">Edit</td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                                            <td style="padding: 16px; font-weight: 600; color: #0f172a;">U-002</td>
+                                            <td style="padding: 16px; color: #334155;">Manufacturing Plant A</td>
+                                            <td style="padding: 16px; color: #64748b;">112 Employees</td>
+                                            <td style="padding: 16px; text-align: right; color: #3b82f6; cursor: pointer; font-weight: 500;">Edit</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="epsr-depts" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0; color: #0f172a;">Departments</h2>
+                            <div class="mockup-card">Department list...</div>
+                        </div>
+                        <div id="epsr-desig" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0; color: #0f172a;">Designations</h2>
+                            <div class="mockup-card">Designation hierarchy...</div>
+                        </div>
+                        <div id="epsr-users" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0; color: #0f172a;">User Management</h2>
+                            <div class="mockup-card" style="padding:0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                                <table class="mockup-table">
+                                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                                        <th style="font-weight: 600; color: #475569; padding: 16px;">Employee</th>
+                                        <th style="font-weight: 600; color: #475569; padding: 16px;">Role</th>
+                                        <th style="font-weight: 600; color: #475569; padding: 16px;">Unit</th>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                                        <td style="padding: 16px;">
+                                            <div style="font-weight: 500; color: #0f172a;">Alice Johnson</div>
+                                            <div style="font-size: 12px; color: #64748b;">alice.j@example.com</div>
+                                        </td>
+                                        <td style="padding: 16px;"><span style="background: #e0e7ff; color: #3730a3; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">HR Manager</span></td>
+                                        <td style="padding: 16px; color: #475569;">HQ - Main</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="epsr-reports" class="mockup-tab-pane">
+                            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0; color: #0f172a;">Reports</h2>
+                            <div class="mockup-card">Analytics...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. New Joiner -->
+        <h3 style="font-size: 20px; color: #0f172a; margin: 50px 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; font-family: 'Inter', sans-serif; font-weight: 600;">New Joiner Management and Handover System</h3>
+        <div class="mockup-container" id="newjoiner" style="border-radius: 0; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+            <div class="mockup-body" style="background: #f3f4f6;">
+                <div class="mockup-sidebar" style="background: white; border-right: 1px solid rgba(0,0,0,0.12); width: 260px;">
+                    <div class="sidebar-header" style="border-bottom: 1px solid rgba(0,0,0,0.12); padding: 24px 16px;">
+                        <div style="font-family: 'Roboto', sans-serif; font-size: 20px; font-weight: 500; color: #1976d2; display: flex; align-items: center; gap: 12px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                            New Joiner Hub
+                        </div>
+                    </div>
+                    <div class="sidebar-nav" style="padding: 12px 8px; font-family: 'Roboto', sans-serif;">
+                        <div class="mockup-nav-item" onclick="switchTab('newjoiner', 'dash')" style="background: rgba(25, 118, 210, 0.08); color: #1976d2; padding: 12px 16px; border-radius: 4px; font-weight: 500;">Dashboard</div>
+                        <div class="mockup-nav-item" onclick="switchTab('newjoiner', 'joiners')" style="color: rgba(0,0,0,0.87); padding: 12px 16px; border-radius: 4px;">New Joiners</div>
+                        <div class="mockup-nav-item" onclick="switchTab('newjoiner', 'attendance')" style="color: rgba(0,0,0,0.87); padding: 12px 16px; border-radius: 4px;">Attendance</div>
+                        <div class="mockup-nav-item" onclick="switchTab('newjoiner', 'contracts')" style="color: rgba(0,0,0,0.87); padding: 12px 16px; border-radius: 4px;">Contract Management</div>
+                        <div class="mockup-nav-item" onclick="switchTab('newjoiner', 'units')" style="color: rgba(0,0,0,0.87); padding: 12px 16px; border-radius: 4px;">Unit Management</div>
+                        <div class="mockup-nav-item" onclick="switchTab('newjoiner', 'users')" style="color: rgba(0,0,0,0.87); padding: 12px 16px; border-radius: 4px;">User Management</div>
+                        <div class="mockup-nav-item" onclick="switchTab('newjoiner', 'reports')" style="color: rgba(0,0,0,0.87); padding: 12px 16px; border-radius: 4px;">Report</div>
+                        <div class="mockup-nav-item" onclick="switchTab('newjoiner', 'handover')" style="color: rgba(0,0,0,0.87); padding: 12px 16px; border-radius: 4px;">HandOver</div>
+                        <div class="mockup-nav-item" onclick="switchTab('newjoiner', 'cab')" style="color: rgba(0,0,0,0.87); padding: 12px 16px; border-radius: 4px;">Cab Management</div>
+                    </div>
+                </div>
+                <div class="mockup-main">
+                    <div class="mockup-topbar" style="background: #1976d2; color: white; border: none; height: 64px; box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14);">
+                        <div class="topbar-welcome" style="color: white; font-family: 'Roboto', sans-serif; font-size: 20px; font-weight: 500;">Admin Panel</div>
+                    </div>
+                    <div class="mockup-content" style="padding: 32px;">
+                        <div id="newjoiner-dash" class="mockup-tab-pane active">
+                            <div style="margin-bottom: 24px;">
+                                <h1 style="font-size: 32px; font-weight: 400; font-family: Roboto; color: rgba(0,0,0,0.87); margin-top: 0; margin-bottom: 8px;">Dashboard</h1>
+                                <p style="color: rgba(0,0,0,0.6); font-family: Roboto; margin-top: 0;">Today's attendance overview for active new joiners.</p>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 32px;">
+                                <div class="mockup-card" style="border-radius: 16px; border-top: 8px solid #1976d2; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 24px; font-family: Roboto; border-left: none; border-right: none; border-bottom: none;">
+                                    <h3 style="font-size: 28px; font-weight: 900; text-align: center; margin-top: 0; margin-bottom: 24px;">Total Today</h3>
+                                    <div style="display: flex; justify-content: center; width: 100%;">
+                                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                            <div style="color: green; font-size: 72px; font-weight: 950; line-height: 1;">18</div>
+                                            <div style="color: green; font-weight: 900; font-size: 20px; margin-top: 8px;">Present</div>
+                                            <div style="margin-top: 12px; font-weight: 800; font-size: 18px;"><span style="color: #2196f3;">M-10</span> <span style="color: rgba(0,0,0,0.38); margin: 0 8px;">|</span> <span style="color: #FF1493;">F-8</span></div>
+                                        </div>
+                                        <div style="width: 1px; background: rgba(0,0,0,0.12); margin: 0 24px;"></div>
+                                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                            <div style="color: red; font-size: 72px; font-weight: 950; line-height: 1;">2</div>
+                                            <div style="color: red; font-weight: 900; font-size: 20px; margin-top: 8px;">Absent</div>
+                                            <div style="margin-top: 12px; font-weight: 800; font-size: 18px;"><span style="color: #2196f3;">M-2</span> <span style="color: rgba(0,0,0,0.38); margin: 0 8px;">|</span> <span style="color: #FF1493;">F-0</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mockup-card" style="border-radius: 16px; border-top: 8px solid #9e9e9e; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 24px; font-family: Roboto; border-left: none; border-right: none; border-bottom: none;">
+                                    <h3 style="font-size: 28px; font-weight: 900; text-align: center; margin-top: 0; margin-bottom: 24px;">Day 1</h3>
+                                    <div style="display: flex; justify-content: center; width: 100%;">
+                                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                            <div style="color: green; font-size: 72px; font-weight: 950; line-height: 1;">5</div>
+                                            <div style="color: green; font-weight: 900; font-size: 20px; margin-top: 8px;">Present</div>
+                                        </div>
+                                        <div style="width: 1px; background: rgba(0,0,0,0.12); margin: 0 24px;"></div>
+                                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                            <div style="color: red; font-size: 72px; font-weight: 950; line-height: 1;">0</div>
+                                            <div style="color: red; font-weight: 900; font-size: 20px; margin-top: 8px;">Absent</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mockup-card" style="border-radius: 16px; border-top: 8px solid #9e9e9e; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 24px; font-family: Roboto; border-left: none; border-right: none; border-bottom: none;">
+                                    <h3 style="font-size: 28px; font-weight: 900; text-align: center; margin-top: 0; margin-bottom: 24px;">Day 2</h3>
+                                    <div style="display: flex; justify-content: center; width: 100%;">
+                                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                            <div style="color: green; font-size: 72px; font-weight: 950; line-height: 1;">4</div>
+                                            <div style="color: green; font-weight: 900; font-size: 20px; margin-top: 8px;">Present</div>
+                                        </div>
+                                        <div style="width: 1px; background: rgba(0,0,0,0.12); margin: 0 24px;"></div>
+                                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                            <div style="color: red; font-size: 72px; font-weight: 950; line-height: 1;">1</div>
+                                            <div style="color: red; font-weight: 900; font-size: 20px; margin-top: 8px;">Absent</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mockup-card" style="border-radius: 16px; border-top: 8px solid #9e9e9e; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 24px; font-family: Roboto; border-left: none; border-right: none; border-bottom: none;">
+                                    <h3 style="font-size: 28px; font-weight: 900; text-align: center; margin-top: 0; margin-bottom: 24px;">Day 3</h3>
+                                    <div style="display: flex; justify-content: center; width: 100%;">
+                                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                            <div style="color: green; font-size: 72px; font-weight: 950; line-height: 1;">9</div>
+                                            <div style="color: green; font-weight: 900; font-size: 20px; margin-top: 8px;">Present</div>
+                                        </div>
+                                        <div style="width: 1px; background: rgba(0,0,0,0.12); margin: 0 24px;"></div>
+                                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                                            <div style="color: red; font-size: 72px; font-weight: 950; line-height: 1;">1</div>
+                                            <div style="color: red; font-weight: 900; font-size: 20px; margin-top: 8px;">Absent</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="newjoiner-joiners" class="mockup-tab-pane">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <h2 style="font-size: 24px; font-weight: 400; margin: 0; color: rgba(0,0,0,0.87); font-family: 'Roboto', sans-serif;">New Joiners</h2>
+                                <button style="background: #1976d2; color: white; border: none; padding: 6px 16px; border-radius: 4px; font-family: 'Roboto', sans-serif; text-transform: uppercase; font-weight: 500; font-size: 14px; box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12); cursor: pointer;">ADD NEW JOINER</button>
+                            </div>
+                            <div class="mockup-card" style="border-radius: 4px; box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12); padding: 0; font-family: 'Roboto', sans-serif;">
+                                <table style="width: 100%; text-align: left; border-collapse: collapse; font-size: 14px;">
+                                    <thead>
+                                        <tr style="border-bottom: 1px solid rgba(224, 224, 224, 1); color: rgba(0, 0, 0, 0.87);">
+                                            <th style="padding: 16px; font-weight: 500;">E-Code</th>
+                                            <th style="padding: 16px; font-weight: 500;">Name</th>
+                                            <th style="padding: 16px; font-weight: 500;">Unit</th>
+                                            <th style="padding: 16px; font-weight: 500;">Role Type</th>
+                                            <th style="padding: 16px; font-weight: 500;">D.O.J</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid rgba(224, 224, 224, 1);">
+                                            <td style="padding: 16px; color: rgba(0, 0, 0, 0.87);">EMP8812</td>
+                                            <td style="padding: 16px; color: rgba(0, 0, 0, 0.87);">John Doe</td>
+                                            <td style="padding: 16px; color: rgba(0, 0, 0, 0.87);">Operations</td>
+                                            <td style="padding: 16px;"><span style="background: rgba(25, 118, 210, 0.1); color: #1976d2; padding: 4px 8px; border-radius: 16px; font-size: 12px; font-weight: 500;">OnRole</span></td>
+                                            <td style="padding: 16px; color: rgba(0, 0, 0, 0.87);">2026-07-18</td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid rgba(224, 224, 224, 1);">
+                                            <td style="padding: 16px; color: rgba(0, 0, 0, 0.87);">CTR445</td>
+                                            <td style="padding: 16px; color: rgba(0, 0, 0, 0.87);">Jane Smith</td>
+                                            <td style="padding: 16px; color: rgba(0, 0, 0, 0.87);">Logistics</td>
+                                            <td style="padding: 16px;"><span style="background: rgba(156, 39, 176, 0.1); color: #9c27b0; padding: 4px 8px; border-radius: 16px; font-size: 12px; font-weight: 500;">OffRole</span></td>
+                                            <td style="padding: 16px; color: rgba(0, 0, 0, 0.87);">2026-07-19</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Empty panes for the other tabs just to support the switchTab function -->
+                        <div id="newjoiner-attendance" class="mockup-tab-pane"><h2 style="font-size: 24px; font-weight: 400; margin-bottom: 24px; margin-top: 0; color: rgba(0,0,0,0.87); font-family: 'Roboto', sans-serif;">Attendance Management</h2></div>
+                        <div id="newjoiner-contracts" class="mockup-tab-pane"><h2 style="font-size: 24px; font-weight: 400; margin-bottom: 24px; margin-top: 0; color: rgba(0,0,0,0.87); font-family: 'Roboto', sans-serif;">Contract Management</h2></div>
+                        <div id="newjoiner-units" class="mockup-tab-pane"><h2 style="font-size: 24px; font-weight: 400; margin-bottom: 24px; margin-top: 0; color: rgba(0,0,0,0.87); font-family: 'Roboto', sans-serif;">Unit Management</h2></div>
+                        <div id="newjoiner-users" class="mockup-tab-pane"><h2 style="font-size: 24px; font-weight: 400; margin-bottom: 24px; margin-top: 0; color: rgba(0,0,0,0.87); font-family: 'Roboto', sans-serif;">User Management</h2></div>
+                        <div id="newjoiner-reports" class="mockup-tab-pane"><h2 style="font-size: 24px; font-weight: 400; margin-bottom: 24px; margin-top: 0; color: rgba(0,0,0,0.87); font-family: 'Roboto', sans-serif;">Reports</h2></div>
+                        <div id="newjoiner-handover" class="mockup-tab-pane"><h2 style="font-size: 24px; font-weight: 400; margin-bottom: 24px; margin-top: 0; color: rgba(0,0,0,0.87); font-family: 'Roboto', sans-serif;">HandOver Process</h2></div>
+                        <div id="newjoiner-cab" class="mockup-tab-pane"><h2 style="font-size: 24px; font-weight: 400; margin-bottom: 24px; margin-top: 0; color: rgba(0,0,0,0.87); font-family: 'Roboto', sans-serif;">Cab Management</h2></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. TRG -->
+        <h3 style="font-size: 20px; color: #0f172a; margin: 50px 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; font-family: 'Inter', sans-serif; font-weight: 600;">TRG Checksheet Management System-HPSP</h3>
+        <div class="mockup-container" id="trg" style="background: #0f172a; color: white;">
+            <div class="mockup-body">
+                <div class="mockup-sidebar" style="background: #1e293b; border-right: 1px solid #334155; color: white;">
+                    <div class="sidebar-header" style="border-bottom: 1px solid #334155; padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="background: #3b82f6; padding: 8px; border-radius: 8px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            </div>
+                            <div style="font-weight: bold; font-size: 16px;">TRG Checksheet</div>
+                        </div>
+                    </div>
+                    <div class="sidebar-nav" style="padding: 12px;">
+                        <div class="mockup-nav-item" onclick="switchTab('trg', 'dashboard')" style="background: #3b82f6; color: white; padding: 12px; border-radius: 6px; font-weight: 500;">Dashboard</div>
+                        <div class="mockup-nav-item" onclick="switchTab('trg', 'logs')" style="color: #cbd5e1; padding: 12px; border-radius: 6px;">Monitoring Logs</div>
+                        <div class="mockup-nav-item" onclick="switchTab('trg', 'history')" style="color: #cbd5e1; padding: 12px; border-radius: 6px;">History</div>
+                        <div class="mockup-nav-item" onclick="switchTab('trg', 'users')" style="color: #cbd5e1; padding: 12px; border-radius: 6px;">Users</div>
+                    </div>
+                </div>
+                <div class="mockup-main" style="background: #0f172a;">
+                    <div class="mockup-topbar" style="background: #1e293b; border-bottom: 1px solid #334155;">
+                        <div class="topbar-welcome" style="color: white; font-weight: 500;">Daily Entry</div>
+                    </div>
+                    <div class="mockup-content">
+                        <div id="trg-dashboard" class="mockup-tab-pane active">
+                            <div style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end;">
+                                <div>
+                                    <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 4px; margin-top: 0; color: white;">Overview Dashboard</h2>
+                                    <p style="color: #94a3b8; margin: 0; font-size: 14px;">Welcome back. Here is the daily summary status.</p>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 8px; display: flex; gap: 8px; align-items: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #3b82f6;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    <span style="color: white; font-weight: 600; font-size: 14px;">2026-07-19</span>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div class="mockup-card" style="background: #1e293b; border: 1px solid #334155; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-size: 13px; color: #94a3b8; font-weight: 600; text-transform: uppercase;">Checked Progress</div>
+                                        <div style="font-size: 32px; font-weight: bold; color: white; margin: 4px 0;">100%</div>
+                                        <div style="font-size: 12px; color: #64748b;">42 of 42 fields</div>
+                                    </div>
+                                    <div style="width: 48px; height: 48px; background: rgba(99,102,241,0.2); color: #818cf8; border-radius: 12px; display: flex; align-items: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+                                </div>
+                                <div class="mockup-card" style="background: #1e293b; border: 1px solid #334155; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-size: 13px; color: #94a3b8; font-weight: 600; text-transform: uppercase;">Total Employees</div>
+                                        <div style="font-size: 32px; font-weight: bold; color: white; margin: 4px 0;">7</div>
+                                    </div>
+                                    <div style="width: 48px; height: 48px; background: rgba(16,185,129,0.2); color: #34d399; border-radius: 12px; display: flex; align-items: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="trg-logs" class="mockup-tab-pane">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <h2 style="font-size: 24px; font-weight: bold; margin: 0; color: white;">Monitoring Logs</h2>
+                                <button style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500;">Export Logs</button>
+                            </div>
+                            <div class="mockup-card" style="background: #1e293b; border: 1px solid #334155; color: #94a3b8; padding: 0; overflow: hidden;">
+                                <table style="width: 100%; text-align: left; border-collapse: collapse; font-size: 14px;">
+                                    <thead>
+                                        <tr style="border-bottom: 1px solid #334155; color: #cbd5e1; background: rgba(255,255,255,0.02);">
+                                            <th style="padding: 16px; font-weight: 600;">E-Code</th>
+                                            <th style="padding: 16px; font-weight: 600;">Employee Name</th>
+                                            <th style="padding: 16px; font-weight: 600;">Slot 1</th>
+                                            <th style="padding: 16px; font-weight: 600;">Slot 2</th>
+                                            <th style="padding: 16px; font-weight: 600;">Slot 3</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid #334155;">
+                                            <td style="padding: 16px; color: white;">E1021</td>
+                                            <td style="padding: 16px; color: white;">Mike Johnson</td>
+                                            <td style="padding: 16px;"><span style="color: #34d399; font-weight: 600;">OK</span></td>
+                                            <td style="padding: 16px;"><span style="color: #34d399; font-weight: 600;">OK</span></td>
+                                            <td style="padding: 16px;"><span style="color: #f87171; font-weight: 600;">NO</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 16px; color: white;">E1034</td>
+                                            <td style="padding: 16px; color: white;">Sarah Connor</td>
+                                            <td style="padding: 16px;"><span style="color: #34d399; font-weight: 600;">OK</span></td>
+                                            <td style="padding: 16px;"><span style="color: #34d399; font-weight: 600;">OK</span></td>
+                                            <td style="padding: 16px;"><span style="color: #34d399; font-weight: 600;">OK</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="trg-history" class="mockup-tab-pane"><h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0; color: white;">History & Reporting</h2></div>
+                        <div id="trg-users" class="mockup-tab-pane"><h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; margin-top: 0; color: white;">User Management</h2></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Script to handle embedded tabs -->
+    <script>
+        function switchTab(projectId, tabId) {
+            const container = document.getElementById(projectId);
+            if(!container) return;
+
+            const navItems = container.querySelectorAll('.mockup-nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            const tabPanes = container.querySelectorAll('.mockup-tab-pane');
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+
+            const targetPane = document.getElementById(projectId + '-' + tabId);
+            if(targetPane) targetPane.classList.add('active');
+
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
